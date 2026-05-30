@@ -1264,24 +1264,31 @@ function isShiftChart(chart) {
     );
 }
 
-function isMonthlyTemperatureShiftChart(divId = "", chart = {}) {
+function isMonthlyShiftChart(divId = "", chart = {}) {
     const id = `${divId || ""} ${chart?.chart_id || ""}`.toLowerCase();
     const title = (chart?.title || "").toLowerCase();
 
     return (
         id.includes("decadal-temp-plot") ||
+        id.includes("decadal-rainfall-plot") ||
         id.includes("decadal_temperature_shift") ||
+        id.includes("decadal_rainfall_shift") ||
         id.includes("monthly_temperature_shift") ||
+        id.includes("monthly_rainfall_shift") ||
         id.includes("temperature_shift") ||
+        id.includes("rainfall_shift") ||
         title.includes("monthly temperature shift") ||
-        title.includes("temperature shift")
+        title.includes("monthly rainfall shift") ||
+        title.includes("temperature shift") ||
+        title.includes("rainfall shift") ||
+        title.includes("historical vs projected")
     );
 }
 
-function applyMobileMonthlyShiftSpacing(layout, divId = "", chart = {}) {
+function applyMobileMonthlyShiftLegendLayout(layout, divId = "", chart = {}) {
     const isMobile = window.innerWidth <= 560;
 
-    if (!isMobile || !isMonthlyTemperatureShiftChart(divId, chart)) {
+    if (!isMobile || !isMonthlyShiftChart(divId, chart)) {
         return layout;
     }
 
@@ -1298,10 +1305,10 @@ function applyMobileMonthlyShiftSpacing(layout, divId = "", chart = {}) {
 
     fixedLayout.margin = {
         ...(fixedLayout.margin || {}),
-        l: Math.max((fixedLayout.margin && fixedLayout.margin.l) || 0, 58),
+        l: Math.max((fixedLayout.margin && fixedLayout.margin.l) || 0, 56),
         r: Math.max((fixedLayout.margin && fixedLayout.margin.r) || 0, 50),
-        t: Math.max((fixedLayout.margin && fixedLayout.margin.t) || 0, 95),
-        b: Math.max((fixedLayout.margin && fixedLayout.margin.b) || 0, 95)
+        t: Math.max((fixedLayout.margin && fixedLayout.margin.t) || 0, 105),
+        b: Math.max((fixedLayout.margin && fixedLayout.margin.b) || 0, 90)
     };
 
     fixedLayout.legend = {
@@ -1309,10 +1316,10 @@ function applyMobileMonthlyShiftSpacing(layout, divId = "", chart = {}) {
         orientation: "h",
         x: 0.5,
         xanchor: "center",
-        y: 1.18,
+        y: 1.2,
         yanchor: "bottom",
         traceorder: "normal",
-        bgcolor: "rgba(255,255,255,0.9)",
+        bgcolor: "rgba(255,255,255,0.92)",
         font: {
             ...((fixedLayout.legend && fixedLayout.legend.font) || {}),
             size: 9
@@ -1326,7 +1333,7 @@ function applyMobileMonthlyShiftSpacing(layout, divId = "", chart = {}) {
         title: {
             ...xAxisTitle,
             text: existingXAxisTitleText || "Month",
-            standoff: 22
+            standoff: 24
         }
     };
 
@@ -1341,7 +1348,7 @@ function applyMobileMonthlyShiftSpacing(layout, divId = "", chart = {}) {
     };
 
     delete fixedLayout.width;
-    fixedLayout.height = Math.max(Number(fixedLayout.height) || 0, 430);
+    fixedLayout.height = Math.max(Number(fixedLayout.height) || 0, 440);
     fixedLayout.autosize = true;
 
     return fixedLayout;
@@ -1715,7 +1722,7 @@ async function animateBarTrace(plotDiv, trace, traceIndex, allowPop = false) {
 
 async function renderAnimatedPlot(plotDiv, figure, chartId = "", chartTitle = "") {
     const finalFigure = deepCloneFigure(figure);
-    finalFigure.layout = applyMobileMonthlyShiftSpacing(finalFigure.layout, chartId, {
+    finalFigure.layout = applyMobileMonthlyShiftLegendLayout(finalFigure.layout, chartId, {
         chart_id: chartId,
         title: chartTitle
     });
@@ -1859,7 +1866,7 @@ async function renderPlotlyChart(divId, chartData) {
         const isIndividualExtremeChart =
             ['extreme-rainfall-plot', 'extreme-tmax-plot', 'extreme-tmin-plot'].includes(divId) ||
             ((chartData.category || '').toLowerCase().includes('extreme') && divId.startsWith('extreme-'));
-        const isMonthlyTempShiftChart = isMonthlyTemperatureShiftChart(divId, chartData);
+        const isMonthlyShift = isMonthlyShiftChart(divId, chartData);
 
         if (chartCard) {
             if (isChhukhaAnalysisChart) {
@@ -1870,8 +1877,8 @@ async function renderPlotlyChart(divId, chartData) {
                 chartCard.dataset.needsSecondResize = "false";
             }
 
-            chartCard.classList.toggle('monthly-shift-card', isMonthlyTempShiftChart);
-            chartCard.classList.toggle('monthly-temperature-shift-card', isMonthlyTempShiftChart);
+            chartCard.classList.toggle('monthly-shift-card', isMonthlyShift);
+            chartCard.classList.toggle('monthly-temperature-shift-card', isMonthlyShift);
         }
 
         if (plotElement) {
@@ -2025,7 +2032,7 @@ async function renderPlotlyChart(divId, chartData) {
         }
 
         cleanLayout = addLegendAxisSpacing(cleanLayout);
-        cleanLayout = applyMobileMonthlyShiftSpacing(cleanLayout, divId, chartData);
+        cleanLayout = applyMobileMonthlyShiftLegendLayout(cleanLayout, divId, chartData);
 
         if (window.innerWidth <= 560) {
             delete cleanLayout.width;

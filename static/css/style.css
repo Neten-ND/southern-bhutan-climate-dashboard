@@ -3227,8 +3227,8 @@ body:has(.home-hero) .footer p {
 @media (max-width: 560px) {
     .monthly-shift-card .plotly-plot,
     .monthly-shift-card .plot {
-        height: 430px !important;
-        min-height: 430px !important;
+        height: 440px !important;
+        min-height: 440px !important;
         max-height: none !important;
         overflow: visible !important;
     }
@@ -5804,8 +5804,8 @@ body.about-page .about-quote {
     .monthly-shift-card .plot,
     .monthly-shift-card .plotly-graph-div,
     .monthly-shift-card .js-plotly-plot {
-        height: 430px !important;
-        min-height: 430px !important;
+        height: 440px !important;
+        min-height: 440px !important;
         max-height: none !important;
         overflow: visible !important;
     }
@@ -5820,7 +5820,7 @@ body.about-page .about-quote {
     .monthly-shift-card .plot,
     .monthly-shift-card .plotly-graph-div,
     .monthly-shift-card .js-plotly-plot {
-        height: 450px !important;
-        min-height: 450px !important;
+        height: 460px !important;
+        min-height: 460px !important;
     }
 }
