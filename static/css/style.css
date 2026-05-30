@@ -5824,3 +5824,23 @@ body.about-page .about-quote {
         min-height: 460px !important;
     }
 }
+
+/* About mobile navbar: allow the title to wrap like Home/Dashboard */
+@media (max-width: 768px) {
+    body.about-page .navbar .nav-brand {
+        flex: 1 1 auto !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        overflow: visible !important;
+    }
+
+    body.about-page .navbar .nav-brand h1 {
+        max-width: 100% !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        word-break: normal !important;
+        overflow-wrap: normal !important;
+        line-height: 1.18 !important;
+    }
+}
