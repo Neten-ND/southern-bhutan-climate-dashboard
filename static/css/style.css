@@ -5388,6 +5388,66 @@ body.about-page .guidance-card.cosupervisor-card p {
     color: #2563eb !important;
 }
 
+/* About Guidance & Support: keep cards clean in minimized laptop widths */
+@media (max-width: 1200px) {
+    body.about-page .guidance-panel .guidance-grid {
+        grid-template-columns: repeat(2, minmax(240px, 1fr)) !important;
+        gap: clamp(16px, 2vw, 28px) !important;
+        align-items: stretch !important;
+    }
+
+    body.about-page .guidance-panel .guidance-card {
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        gap: 16px !important;
+        min-width: 0 !important;
+        width: 100% !important;
+        padding: clamp(18px, 2.4vw, 28px) !important;
+        overflow: hidden !important;
+        text-align: center !important;
+    }
+
+    body.about-page .guidance-panel .guidance-card img {
+        width: clamp(104px, 14vw, 126px) !important;
+        height: clamp(104px, 14vw, 126px) !important;
+        max-width: 100% !important;
+        object-fit: cover !important;
+        border-radius: 50% !important;
+        flex-shrink: 0 !important;
+    }
+
+    body.about-page .guidance-panel .guidance-card > div {
+        min-width: 0 !important;
+        width: 100% !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
+
+    body.about-page .guidance-panel .guidance-card h3,
+    body.about-page .guidance-panel .guidance-card p,
+    body.about-page .guidance-panel .guidance-card span,
+    body.about-page .guidance-panel .guidance-card a {
+        max-width: 100% !important;
+        min-width: 0 !important;
+        text-align: center !important;
+        white-space: normal !important;
+        overflow-wrap: anywhere !important;
+        word-break: normal !important;
+    }
+
+    body.about-page .guidance-panel .guidance-card h3 {
+        font-size: clamp(20px, 2.1vw, 24px) !important;
+        line-height: 1.2 !important;
+    }
+}
+
+@media (max-width: 760px) {
+    body.about-page .guidance-panel .guidance-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
 /* Dashboard selected Dzongkhag header: keep all four metadata items visible */
 .selected-dzongkhag-banner {
     grid-template-columns: minmax(0, 1fr) minmax(320px, 42%) !important;
